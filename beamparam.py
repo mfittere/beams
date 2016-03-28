@@ -3,8 +3,8 @@ import numpy as np
 
 def gammarel(EGeV,m0=mp):
   """returns the relativistic gamma
-   input: energy E [GeV], m0 [MeV]"""
-  return EGeV*1.e3/m0
+   input: kinetic energy E [GeV], m0 [MeV]"""
+  return (EGeV*1.e3+m0)/m0
 
 def betarel(EGeV,m0=mp):
   g=gammarel(EGeV,m0=m0)
