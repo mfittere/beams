@@ -29,7 +29,7 @@ def eta(alpha_c,EGeV,m0=mp):
   return eta,gt
 
 def frev(EGeV,C=26658.8832,m0=mp):
-  """calculate the harmonic number"""
+  """calculate the revolution frequency"""
   b=betarel(EGeV=EGeV,m0=m0)
   return (b*clight)/C
 
@@ -38,8 +38,53 @@ def nus(h,eta,EGeV,VMV,phirf=0,m0=mp):
   h: harmonic number
   eta: phase slip factor
   EGeV: beam energy [GeV]
-  VMV: rf voltage in [MV]
+  VMV: rf voltage [MV]
   phirf: rf phase [rad]
   m0: particle mass [MeV]
   """
   return np.sqrt(h*np.abs(eta)*VMV*1.e6/(2*np.pi*betarel(EGeV,m0=m0)**2*EGeV*1.e9))
+
+def bucket_area(h,eta,EGeV,VMV,frf,m0=mp):
+  """returns the bucket area [eVs]
+  h: harmonic number
+  eta: phase slip factor
+  EGeV: beam energy [GeV]
+  VMV: rf voltage [MV]
+  frf: rf frequency [Hz]
+  m0: particle mass [MeV]
+  """
+  b=betarel(EGeV=EGeV,m0=m0)
+  return (8*b)/(frf*np.pi)*np.sqrt((EGeV*1.e9*VMV*1.e6)/(2*np.pi*h*eta))
+
+def bucket_height(h,eta,EGeV,VMV,m0=mp):
+  """returns the bucket half heigth dE/E
+  full bucket height reaches from [-dE/E,+dE/E]
+  h: harmonic number
+  eta: phase slip factor
+  EGeV: beam energy [GeV]
+  VMV: rf voltage [MV]
+  m0: particle mass [MeV]
+  """
+  b=betarel(EGeV=EGeV,m0=m0)
+  return b*np.sqrt((2*VMV*1.e6)/(np.pi*h*eta*EGeV*1.e9))
+
+def bucket_length(frf):
+  """returns the bucket length l=clight/frf [m]
+  frf: rf frequency [Hz]
+  """
+  return clight/frf
+
+def beta_z(frev,eta,nus):
+  """returns the longitudinal beta function [m]
+  where beta_z=sigz/sigp with bunch length sigz
+  and momentum spread sigp.
+  Note that dp/p=1/beta**2 dE/E where beta is
+  the relativistic beta.
+
+  Parameters:
+  -----------
+  frev: revolution frequency [Hz]
+  eta: phase slip factor
+  nus: synchrotron tune
+  """
+  return eta*clight/(2*np.pi*nus*frev)
