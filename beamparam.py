@@ -3,13 +3,31 @@ import numpy as np
 
 def gammarel(EGeV,m0=mp):
   """returns the relativistic gamma
-   input: kinetic energy E [GeV], m0 [MeV]"""
+  Parameters:
+  -----------
+  EGeV: kinetic energy [GeV]
+  m0: restmass [MeV]
+  """
   return (EGeV*1.e3+m0)/m0
 
 def betarel(EGeV,m0=mp):
   g=gammarel(EGeV,m0=m0)
   return np.sqrt(1-1/g**2)
 
+def brho(EGeV,m0=mp):
+  """returns the magnetic rigidity [T/m]
+  Parameters:
+  -----------
+  EGeV: kinetic energy [GeV]
+  m0: restmass [MeV]
+  """
+  beta=betarel(EGeV,m0)
+  return 10/2.998*beta*EGeV
+  
+def frev(EGeV,C=26658.8832,m0=mp):
+  """calculate the revolution frequency"""
+  b=betarel(EGeV=EGeV,m0=m0)
+  return (b*clight)/C
 
 def emitrms(epsn,EGeV,m0=mp):
   """returns rms emittance in [mum].
@@ -27,11 +45,6 @@ def eta(alpha_c,EGeV,m0=mp):
   eta=alpha_c-1/g**2
   gt=np.sqrt(1/np.abs(alpha_c))
   return eta,gt
-
-def frev(EGeV,C=26658.8832,m0=mp):
-  """calculate the revolution frequency"""
-  b=betarel(EGeV=EGeV,m0=m0)
-  return (b*clight)/C
 
 def nus(h,eta,EGeV,VMV,phirf=0,m0=mp):
   """calculate synchrotron tune
@@ -88,3 +101,13 @@ def beta_z(frev,eta,nus):
   nus: synchrotron tune
   """
   return eta*clight/(2*np.pi*nus*frev)
+
+def stored_beam_energy(EGeV,nb=2808,np=1.15e11):
+  """returns the beam enery [MJ]
+  Parameters:
+  -----------
+  EGeV: beam energy
+  nb: number of bunches
+  np: number of particles per bunch
+  """
+  return EGeV*1.e9*nb*np*echarge*1.e-6
