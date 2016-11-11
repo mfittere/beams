@@ -29,6 +29,14 @@ def frev(EGeV,C=26658.8832,m0=mp):
   b=betarel(EGeV=EGeV,m0=m0)
   return (b*clight)/C
 
+def emitnorm(eps,EGeV,m0=mp):
+  """returns normalized emittance in [mum].
+  input: eps [mum], E [GeV], m0 [MeV]
+  """
+  gamma= gammarel(EGeV,m0)
+  beta = betarel(EGeV,m0)
+  return eps*(gamma*beta)
+
 def emitrms(epsn,EGeV,m0=mp):
   """returns rms emittance in [mum].
   input: epsn [mum], E [GeV], m0 [MeV]
