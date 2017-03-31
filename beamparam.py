@@ -45,6 +45,14 @@ def emitrms(epsn,EGeV,m0=mp):
   beta = betarel(EGeV,m0)
   return epsn/(gamma*beta)
 
+def emitnorm(eps,EGeV,m0=mp):
+  """returns normalized emittance in [mum].
+  input: eps [mum], E [GeV], m0 [MeV]
+  """
+  gamma= gammarel(EGeV,m0)
+  beta = betarel(EGeV,m0)
+  return eps*(gamma*beta)
+
 def eta(alpha_c,EGeV,m0=mp):
   """calculates the phase slip factor
   and gamma transition where alpha_c
