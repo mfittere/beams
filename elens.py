@@ -4,7 +4,9 @@ from beamparam import *
 import numpy as np
 
 def hel_thetamax(r2,I,l,EkeV_e,EGeV_p,direction):
-  """calculate maximum kick from ideal e-lens:
+  """
+  calculate maximum kick from ideal e-lens:
+  
   Parameters:
   -----------
   r2     : outer radius [m]
@@ -13,7 +15,12 @@ def hel_thetamax(r2,I,l,EkeV_e,EGeV_p,direction):
   EkeV_e : e-beam energy [keV]
   EGeV_p : p-beam energy [keV]
   direction: direction of e-beam and p-beam,
-    options are 'same' and 'opposite'"""
+    options are 'same' and 'opposite'
+  
+  Returns:
+  --------
+  thetamax: maximum kick [rad]
+  """
   beta_e=betarel(EkeV_e*1.e-6, m0=me)
   beta_p=betarel(EGeV_p, m0=mp)
   brho_p=brho(EGeV_p, m0=mp)
