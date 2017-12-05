@@ -127,3 +127,14 @@ def stored_beam_energy(EGeV,nb=2808,np=1.15e11):
   np: number of particles per bunch
   """
   return EGeV*1.e9*nb*np*echarge*1.e-6
+
+def beam_current(nb,np,frev=11245):
+  """returns the beam current [A], assumes
+  that particles have charge +/-e.
+  Parameters:
+  ----------
+  nb: number of bunches
+  np: number of particles per bunch
+  frev: revolution frequency [Hz]
+  """
+  return echarge*nb*np*frev
